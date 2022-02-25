@@ -1,0 +1,17 @@
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: nexus-web
+  namespace: nexus
+spec:
+  virtualhost:
+    fqdn: nexus-np.bcthk.info
+    tls:
+      secretName: cert-delegation/tls-secret
+  routes:
+    - conditions:
+        - prefix: /
+      services:
+        - name: nexus-nexus-repository-manager
+          port: 8081
